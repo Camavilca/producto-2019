@@ -35,7 +35,11 @@ public class ProductoController {
         JsonResponse response = new JsonResponse();
         try {
             service.save(producto);
-            response.setMessage("Producto Guardado");
+            if (producto.getId() == null) {
+                response.setMessage("Producto Guardado");
+            }else{
+                response.setMessage("Producto Actualizado");
+            }
             response.setSuccess(Boolean.TRUE);
         } catch (PhobosException e) {
             ExceptionHandler.handlePhobosEx(e, response);

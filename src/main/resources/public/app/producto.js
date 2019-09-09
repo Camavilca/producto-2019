@@ -13,6 +13,16 @@ new Vue({
             modalSize: 'modal-lg',
             processing: false
         },
+        categorias: [
+            {id: 1, nombre: 'Quimicos'},
+            {id: 1, nombre: 'Cosmeticos'},
+            {id: 1, nombre: 'Farmaceuticos'},
+            {id: 1, nombre: 'Metalicos'},
+            {id: 1, nombre: 'Heramientas'},
+            {id: 1, nombre: 'Electricos'},
+            {id: 1, nombre: 'Abarrotes'},
+            {id: 1, nombre: 'Ferreteria'},
+        ],
         fieldSearch: null
     },
     mounted() {

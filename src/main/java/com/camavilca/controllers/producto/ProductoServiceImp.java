@@ -42,7 +42,7 @@ public class ProductoServiceImp implements ProductoService {
         }
         Producto productoDB = productoDAO.findProducto(nombre);
         if (productoDB == null) {
-            throw new PhobosException("No existen datos con esa Descripcion");
+            throw new PhobosException("No existen producto con esa Descripcion");
         }
         return productoDB;
     }

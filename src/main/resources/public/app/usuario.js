@@ -12,7 +12,7 @@ new Vue({
             axios.post("/registro", $vue.usuario).then(response => {
                 if (response.data.success) {
                     var datos = response.data.data;
-                    window.location.replace(`/${datos[0]}`);
+                    window.location.replace(`/producto`);
                     notify2(response.data.message, "success");
                 } else {
                     notify2(response.data.message, "error");
@@ -26,7 +26,7 @@ new Vue({
             axios.post("/iniciar", $vue.usuario).then(response => {
                 if (response.data.success) {
                     var datos = response.data.data;
-                    window.location.replace(`/${datos[0]}`);
+                    window.location.replace(`/producto`);
                     notify2(response.data.message, "success");
                 } else {
                     notify2(response.data.message, "error");
