@@ -1,0 +1,20 @@
+<modal-vik ref="modalDeporte"
+           v-bind="modalDeporte"
+           v-bind:okaction="save">
+    <div slot="body">
+        <div class="card-body ">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input placeholder="Ingrese nombre" v-model="deporte.nombre" class="form-control" required="true"/>
+            </div>
+            <div class="form-group">
+                <label for="historia">Historia</label>
+                <textarea placeholder="Ingrese Historia" v-model="deporte.historia" class="form-control" required="true"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripcion</label>
+                <textarea placeholder="Ingrese Descripcion" v-model="deporte.descripcion" class="form-control" required="true"></textarea>
+            </div>
+        </div>
+    </div>
+</modal-vik>

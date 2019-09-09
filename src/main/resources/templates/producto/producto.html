@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html layout:decorator="_layout/layout">
+    <head>
+        <title>Tecsup</title>
+    </head>
+
+    <body>
+        <div layout:fragment="CONTAINER">
+            <section id="productoVUE" class="animated fadeInDown  m-t-sxl" v-cloak="">
+                <div class="container-fluid">
+                    <div class="row mb-4 mt-5">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <h2 class="text-primary">
+                                        Productos
+                                    </h2>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" 
+                                               placeholder="Buscar" aria-describedby="basic-addon2"
+                                               v-model="fieldSearch"
+                                               v-on:keyup.enter="searchProducto">
+                                        <div class="input-group-append">
+                                            <button class="input-group-text btn btn-info" id="basic-addon2" v-on:click="searchProducto">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-8 h-100 float-right d-flex justify-content-end">
+                            <button class="btn btn-primary" v-on:click="openModalProducto">Nuevo Producto</button>
+                        </div>
+                        
+                       
+                    </div>
+
+                    <div class="row">
+                        <div class="card col-sm-12 col-md-12">
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
+                                            <th>Categoria</th>
+                                            <th>Stock</th>
+                                            <th></th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in productos">
+                                            <td>
+                                                <span v-text="item.nombre"></span>
+                                            </td>
+                                            <td>
+                                                <span v-text="item.precio"></span>
+                                            </td>
+                                            <td>
+                                                <span v-text="item.categoria"></span>
+                                            </td>
+                                            <td>
+                                                <span v-text="item.stock"></span>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group dropleft">
+                                                    <a data-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-v-alt"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu pull-left" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" v-on:click="update(item)">
+                                                            Editar
+                                                        </a>
+                                                        <a class="dropdown-item" v-on:click="eliminar(item)">
+                                                            Eliminar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="producto/productoModalForm"></div>
+            </section>
+        </div>
+        <div layout:fragment="JS">
+            <div th:substituteby="_modules/vue-modal"></div>
+            <script th:src="@{/app/producto.js}"></script>
+        </div>
+    </body>
+</html>
+
+

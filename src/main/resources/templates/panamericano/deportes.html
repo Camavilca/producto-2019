@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html layout:decorator="_layout/layout">
+    <head>
+        <title>Componente</title>
+    </head>
+
+    <body>
+        <div layout:fragment="CONTAINER">
+            <section id="deportesVUE" class="animated fadeInDown  m-t-sxl" v-cloak="">
+                <div class="container">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <h2 class="text-primary">
+                                Deportes
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-outline-primary float-right my-3" v-on:click="openModalDeporte">Nuevo Deporte</button>
+                        <div class=" card col-sm-12 col-md-12">
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th class="m-3">Nombre</th>
+                                        <th>Historia</th>
+                                        <th>Descripcion</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr v-for="item in deportes">
+                                        <th>
+                                            <span class="text-primary text-capitalize" v-text="item.nombre"></span>
+                                        </th>
+                                        <th>
+                                            <span class="text-success text-capitalize" v-text="item.descripcion"></span>
+                                        </th>
+                                        <th>
+                                            <span class="text-secondary text-capitalize" v-text="item.historia"></span>
+                                        </th>
+                                        <td>
+                                            <div class="btn-group dropleft">
+                                                <a data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v-alt"></i>
+                                                </a>
+                                                <div class="dropdown-menu pull-left" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" v-on:click="update(item)">
+                                                        Editar
+                                                    </a>
+                                                    <a class="dropdown-item" v-on:click="eliminar(item)">
+                                                        Eliminar
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="panamericano/deportesModal"></div>
+            </section>
+        </div>
+        <div layout:fragment="JS">
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                var rutaModulo = /*[[${rutaModulo}]]*/ null;
+                /*]]>*/
+            </script>
+            <div th:substituteby="_modules/vue-modal"></div>
+            <script th:src="@{/app/deportes.js}"></script>
+        </div>
+    </body>
+</html>
+
+

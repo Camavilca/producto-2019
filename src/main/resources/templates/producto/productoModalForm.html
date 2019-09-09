@@ -1,0 +1,24 @@
+<modal-vik ref="productoModal"
+           v-bind="productoModal"
+           v-bind:okaction="save">
+    <div slot="body">
+        <div class="card-body ">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input placeholder="Ingrese nombre" v-model="producto.nombre" class="form-control" required="true"/>
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoria</label>
+                <input placeholder="Ingrese categoria" v-model="producto.categoria" class="form-control" required="true"/>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <input id="precio" placeholder="0.0" v-model="producto.precio" class="form-control" required="true"/>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock</label>
+                <input id="stock" placeholder="0.0" v-model="producto.stock" class="form-control" required="true"/>
+            </div>
+        </div>
+    </div>
+</modal-vik>
