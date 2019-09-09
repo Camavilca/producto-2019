@@ -8,7 +8,7 @@ new Vue({
         productoModal: {
             id: "productoModal",
             header: true,
-            title: 'Nuevo Deporte',
+            title: 'Nuevo Producto',
             okbtn: 'Aceptar',
             modalSize: 'modal-lg',
             processing: false
