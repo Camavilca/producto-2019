@@ -147,10 +147,14 @@ public class ProductoController {
     public JsonResponse search(@RequestParam("nombre") String nombre) {
         JsonResponse response = new JsonResponse();
         JsonNodeFactory jsonFactory = JsonNodeFactory.instance;
+        ArrayNode arrayNode = new ArrayNode(jsonFactory);
         try {
-            Producto producto = service.findProducto(nombre);
-            ObjectNode node = JsonHelper.createJson(producto, jsonFactory, new String[]{"*"});
-            response.setData(node);
+            List<Producto> productos = service.findProducto(nombre);
+            productos.forEach(producto -> {
+                ObjectNode node = JsonHelper.createJson(producto, jsonFactory, new String[]{"*"});
+                arrayNode.add(node);
+            });
+            response.setData(arrayNode);
             response.setSuccess(Boolean.TRUE);
         } catch (PhobosException e) {
             ExceptionHandler.handlePhobosEx(e, response);

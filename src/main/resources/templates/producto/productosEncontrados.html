@@ -1,0 +1,25 @@
+<modal-vik ref="encontrados"
+           v-bind="encontrados">
+    <div slot="body">
+        <div class="card-body ">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
+                        <th>Stock</th>
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr v-for="item in encontrados">
+                        <td v-text="item.nombre"></td>
+                        <td v-text="item.precio"></td>
+                        <td v-text="item.categoria"></td>
+                        <td v-text="item.stock"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</modal-vik>

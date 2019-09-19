@@ -15,6 +15,7 @@ new Vue({
         categoria: {},
         productos: [],
         categorias: [],
+        encontrados: null,
         productoModal: {
             id: "productoModal",
             header: true,
@@ -30,6 +31,15 @@ new Vue({
             okbtn: 'Guardar',
             modalSize: 'modal-lg',
             processing: false
+        },
+        encontrados: {
+            id: "encontrados",
+            header: true,
+            title: 'Productos Encontrados',
+            modalSize: 'modal-lg',
+            processing: false,
+            footer: false,
+            showaccept: false
         },
         fieldSearch: null,
     },
@@ -173,39 +183,20 @@ new Vue({
                 notify2("Ingrese un nombre o codigo", "error");
                 return;
             }
-            axios.get("/producto/search", {params: {
-                    nombre: $vue.fieldSearch
-                }}).then(response => {
-                if (response.data.success) {
-                    console.log(response);
-                    $vue.modalRespuesta(response.data.data);
-                } else {
-                    notify2(response.data.message, "error");
-                }
-            }).catch((err) => {
+            axios.get("/producto/search", {params: {nombre: $vue.fieldSearch}})
+                    .then(response => {
+                        if (response.data.success) {
+                            $vue.modalRespuesta(response.data.data);
+                        } else {
+                            notify2(response.data.message, "error");
+                        }
+                    }).catch((err) => {
                 notify2(MESSAGES.errorComunicacion, "error");
             });
         },
-        modalRespuesta(data) {
-            swal.fire({
-                title: `<strong>${data.nombre}</strong>`,
-                html: `<table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Precio</th>
-                                            <th>Categoria</th>
-                                            <th>Stock</th>
-                                        </tr> 
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>${data.precio}</td>
-                                            <td>${data.categoria}</td>
-                                            <td>${data.stock}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>`,
-            })
+        modalRespuesta(productos) {
+            this.encontrados = productos;
+            this.$refs.encontrados.open();
         }
     },
 

@@ -15,8 +15,7 @@ import pe.albatross.zelpers.miscelanea.PhobosException;
 public class ProductoServiceImp implements ProductoService {
 
     @Autowired
-   ProductoDAO productoDAO;
-
+    ProductoDAO productoDAO;
 
     @Autowired
     CategoriaDAO categoriaDAO;
@@ -53,15 +52,19 @@ public class ProductoServiceImp implements ProductoService {
 //        return productoDB;
 //    }
     @Override
-    public Producto findProducto(String nombre) {
+    public List<Producto> findProducto(String nombre) {
         if (nombre == null) {
             throw new PhobosException("Debe ingresar un nombre o codigo");
         }
-        Producto productoDB = productoDAO.findProducto(nombre);
-        if (productoDB == null) {
+        List<Producto> productos = productoDAO.findProducto(forLike(nombre));
+        if (productos.isEmpty()) {
             throw new PhobosException("No existen producto con esa Descripcion");
         }
-        return productoDB;
+        return productos;
+    }
+
+    private String forLike(String nombre) {
+        return "%" + nombre.replaceAll(" ", "%") + "%";
     }
 
     @Override
@@ -84,6 +87,5 @@ public class ProductoServiceImp implements ProductoService {
     public void deleteCategoria(Categoria categoria) {
         categoriaDAO.delete(categoria);
     }
-   
 
 }

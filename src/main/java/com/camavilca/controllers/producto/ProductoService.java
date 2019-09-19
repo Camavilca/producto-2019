@@ -12,7 +12,7 @@ public interface ProductoService {
 
     List<Producto> all();
 
-    Producto findProducto(String nombre);
+    List<Producto> findProducto(String nombre);
 
     void saveCategoria(Categoria categoria);
 
