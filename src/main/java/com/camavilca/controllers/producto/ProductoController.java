@@ -1,5 +1,6 @@
 package com.camavilca.controllers.producto;
 
+import com.camavilca.model.Categoria;
 import com.camavilca.model.Producto;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -37,9 +38,25 @@ public class ProductoController {
             service.save(producto);
             if (producto.getId() == null) {
                 response.setMessage("Producto Guardado");
-            }else{
+            } else {
                 response.setMessage("Producto Actualizado");
             }
+            response.setSuccess(Boolean.TRUE);
+        } catch (PhobosException e) {
+            ExceptionHandler.handlePhobosEx(e, response);
+        } catch (Exception e) {
+            ExceptionHandler.handleException(e, response);
+        }
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping("saveCategoria")
+    public JsonResponse saveCategoria(@RequestBody Categoria categoria) {
+        JsonResponse response = new JsonResponse();
+        try {
+            service.saveCategoria(categoria);
+            response.setMessage("Categoria Guardado");
             response.setSuccess(Boolean.TRUE);
         } catch (PhobosException e) {
             ExceptionHandler.handlePhobosEx(e, response);
@@ -66,6 +83,22 @@ public class ProductoController {
     }
 
     @ResponseBody
+    @RequestMapping("deleteCategoria")
+    public JsonResponse deleteCategoria(@RequestBody Categoria categoria) {
+        JsonResponse response = new JsonResponse();
+        try {
+            service.deleteCategoria(categoria);
+            response.setMessage("Categoria Eliminada");
+            response.setSuccess(Boolean.TRUE);
+        } catch (PhobosException e) {
+            ExceptionHandler.handlePhobosEx(e, response);
+        } catch (Exception e) {
+            ExceptionHandler.handleException(e, response);
+        }
+        return response;
+    }
+
+    @ResponseBody
     @RequestMapping("all")
     public JsonResponse all() {
         JsonResponse response = new JsonResponse();
@@ -75,6 +108,28 @@ public class ProductoController {
             List<Producto> productos = service.all();
             for (Producto producto : productos) {
                 ObjectNode node = JsonHelper.createJson(producto, jsonFactory, new String[]{"*"});
+                arrayNode.add(node);
+            }
+            response.setData(arrayNode);
+            response.setSuccess(Boolean.TRUE);
+        } catch (PhobosException e) {
+            ExceptionHandler.handlePhobosEx(e, response);
+        } catch (Exception e) {
+            ExceptionHandler.handleException(e, response);
+        }
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping("allCategoria")
+    public JsonResponse allCategoria() {
+        JsonResponse response = new JsonResponse();
+        JsonNodeFactory jsonFactory = JsonNodeFactory.instance;
+        ArrayNode arrayNode = new ArrayNode(jsonFactory);
+        try {
+            List<Categoria> categorias = service.allCategoria();
+            for (Categoria categoria : categorias) {
+                ObjectNode node = JsonHelper.createJson(categoria, jsonFactory, new String[]{"*"});
                 arrayNode.add(node);
             }
             response.setData(arrayNode);

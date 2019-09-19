@@ -30,14 +30,10 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="col-md-8 h-100 float-right d-flex justify-content-end">
                             <button class="btn btn-primary" v-on:click="openModalProducto">Nuevo Producto</button>
                         </div>
-                        
-                       
                     </div>
 
                     <div class="row">
@@ -48,7 +44,13 @@
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Precio</th>
-                                            <th>Categoria</th>
+                                            <th>
+                                                Categoria
+                                                <button class="btn btn-outline-primary btn-sm" 
+                                                        v-on:click="openModalCategoria">
+                                                    <span class="fa fa-plus"></span>
+                                                </button>
+                                            </th>
                                             <th>Stock</th>
                                             <th></th>
                                         </tr> 
@@ -90,6 +92,7 @@
                     </div>
                 </div>
                 <div th:replace="producto/productoModalForm"></div>
+                <div th:replace="producto/categoriaModalForm"></div>
             </section>
         </div>
         <div layout:fragment="JS">

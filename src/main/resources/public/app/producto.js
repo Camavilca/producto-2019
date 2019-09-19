@@ -1,33 +1,42 @@
-/* global axios */
+/* global axios, Vue */
+Vue.component('multiselect', {
+    mixins: [window.VueMultiselect.default],
+    props: {
+        selectLabel: {
+            default: ""
+        }
+    }
+});
 Vue.component("modal", {template: "#modal_template"});
 new Vue({
     el: "#productoVUE",
     data: {
         producto: {},
+        categoria: {},
         productos: [],
+        categorias: [],
         productoModal: {
             id: "productoModal",
             header: true,
             title: 'Nuevo Producto',
-            okbtn: 'Aceptar',
+            okbtn: 'Guardar',
             modalSize: 'modal-lg',
             processing: false
         },
-        categorias: [
-            {id: 1, nombre: 'Quimicos'},
-            {id: 1, nombre: 'Cosmeticos'},
-            {id: 1, nombre: 'Farmaceuticos'},
-            {id: 1, nombre: 'Metalicos'},
-            {id: 1, nombre: 'Heramientas'},
-            {id: 1, nombre: 'Electricos'},
-            {id: 1, nombre: 'Abarrotes'},
-            {id: 1, nombre: 'Ferreteria'},
-        ],
-        fieldSearch: null
+        categoriaModal: {
+            id: "categoriaModal",
+            header: true,
+            title: 'Nuevo Categoria',
+            okbtn: 'Guardar',
+            modalSize: 'modal-lg',
+            processing: false
+        },
+        fieldSearch: null,
     },
     mounted() {
         const $vue = this;
         $vue.all();
+        $vue.allCategoria();
     },
     methods: {
         openModalProducto() {
@@ -39,12 +48,39 @@ new Vue({
                 $("#stock").numeric({negative: false});
             }, 500);
         },
+        openModalCategoria() {
+            let $vue = this;
+            $vue.categoria = {};
+            $vue.$refs.categoriaModal.open();
+        },
         save() {
             let $vue = this;
+            if ($vue.producto.categoriaEnum != null || typeof $vue.producto.categoriaEnum != 'undefined') {
+                $vue.producto.categoria = $vue.producto.categoriaEnum.nombre;
+            }
             axios.post("/producto/save", $vue.producto).then(response => {
                 if (response.data.success) {
                     $vue.all();
                     $vue.$refs.productoModal.close();
+                    notify2(response.data.message, "success");
+                } else {
+                    notify2(response.data.message, "error");
+                }
+            }).catch((err) => {
+                notify2(MESSAGES.errorComunicacion, "error");
+            });
+            console.log($vue.producto);
+        },
+        saveCategoria() {
+            let $vue = this;
+            if ($vue.categoria.nombre == null
+                    || typeof $vue.categoria.nombre == 'undefined') {
+                return;
+            }
+            axios.post("/producto/saveCategoria", $vue.categoria).then(response => {
+                if (response.data.success) {
+                    $vue.allCategoria();
+                    $vue.categoria.nombre = '';
                     notify2(response.data.message, "success");
                 } else {
                     notify2(response.data.message, "error");
@@ -77,11 +113,47 @@ new Vue({
                 }
             });
         },
+        eliminarCategoria(categoria) {
+            let $vue = this;
+            swal.fire({
+                title: "¿ Seguro que quieres Eliminar Categoria ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Aceptar"
+            }).then(result => {
+                if (result.value) {
+                    axios.post("/producto/deleteCategoria", categoria).then(response => {
+                        if (response.data.success) {
+                            $vue.allCategoria();
+                            notify2(response.data.message, "info");
+                        } else {
+                            notify2(response.data.message, "error");
+                        }
+                    }).catch((err) => {
+                        notify2(MESSAGES.errorComunicacion, "error");
+                    });
+                }
+            });
+        },
         all() {
             const $vue = this;
             axios.get("/producto/all").then(response => {
                 if (response.data.success) {
                     $vue.productos = response.data.data;
+                } else {
+                    notify2(response.data.message, "error");
+                }
+            }).catch((err) => {
+                notify2(MESSAGES.errorComunicacion, "error");
+            });
+        },
+        allCategoria() {
+            const $vue = this;
+            axios.get("/producto/allCategoria").then(response => {
+                if (response.data.success) {
+                    $vue.categorias = response.data.data;
                 } else {
                     notify2(response.data.message, "error");
                 }
