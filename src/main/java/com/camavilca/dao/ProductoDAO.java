@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductoDAO extends JpaRepository<Producto, Long> {
 
-    @Query(value = "SELECT * FROM producto p WHERE p.nombre = ?1 OR p.id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM producto p WHERE p.nombre = ?1", nativeQuery = true)
     Producto findProducto(String nombre);
+    
+
+     
+    
+
 }

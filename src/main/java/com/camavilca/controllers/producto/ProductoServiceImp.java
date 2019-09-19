@@ -84,5 +84,6 @@ public class ProductoServiceImp implements ProductoService {
     public void deleteCategoria(Categoria categoria) {
         categoriaDAO.delete(categoria);
     }
+   
 
 }
