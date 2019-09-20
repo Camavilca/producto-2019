@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.camavilca</groupId>
-    <artifactId>panamericanos</artifactId>
-    <version>1.0</version>
+    <artifactId>productos</artifactId>
+    <version>1.0.2.RELEASE</version>
 
     <name>producto-2019</name>
 
