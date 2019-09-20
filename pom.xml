@@ -6,6 +6,8 @@
     <groupId>com.camavilca</groupId>
     <artifactId>productos</artifactId>
     <version>1.0.2.RELEASE</version>
+    <packaging>jar</packaging>
+
 
     <name>producto-2019</name>
 
